@@ -1,0 +1,4 @@
+game_id,team,player_id,observed_at,absence_probability,impact_points,impact_sd,impact_available_at,source
+DEMO_3,TEAM_A,DEMO_QB,2024-09-20T12:00:00Z,0.9,5,1,2024-09-01T12:00:00Z,synthetic-example
+DEMO_3,TEAM_A,DEMO_QB,2024-09-22T16:00:00Z,1,5,1,2024-09-01T12:00:00Z,synthetic-late-report
+DEMO_4,TEAM_A,DEMO_QB,2024-09-27T12:00:00Z,0.5,5,1,2024-09-01T12:00:00Z,synthetic-example
