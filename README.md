@@ -1,5 +1,8 @@
 # Gridiron Lab
 
+**[Open the browser demo →](https://invasivepencils.github.io/gridiron-lab/)** · No installation or sign-in required.
+
+
 An NFL quantitative research project exploring team strength, player availability,
 and pregame win probabilities. The goal is to measure whether injury information
 improves forecasts on unseen games, then compare calibrated forecasts with
