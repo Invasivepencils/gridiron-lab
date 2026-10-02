@@ -177,7 +177,7 @@ def metrics(rows, field):
     return {"games": len(eligible), "brier": brier, "log_loss": loss / len(eligible), "calibration_bins": bins}
 
 
-def backtest(games, injuries, hours_before=24, simulations=2000, seed=7):
+def backtest(games, injuries, hours_before=24, simulations=2000, seed=7, model_type='baseline'):
     if hours_before <= 0:
         raise ValueError("Forecast horizon must be positive")
     rows = []
@@ -185,8 +185,12 @@ def backtest(games, injuries, hours_before=24, simulations=2000, seed=7):
         if game.home_score is None:
             continue
         cutoff = game.kickoff - timedelta(hours=hours_before)
-        model = fit_before(games, cutoff, game.season)
-        row = forecast(model, game, injuries, cutoff, simulations, seed)
+        if model_type == 'bayesian':
+            from .bayes import fit, predict
+            row = predict(fit(games, game, cutoff), game, injuries, cutoff, simulations, seed)
+        else:
+            model = fit_before(games, cutoff, game.season)
+            row = forecast(model, game, injuries, cutoff, simulations, seed)
         row.update(season=game.season, week=game.week,
                    outcome=None if game.home_score == game.away_score else int(game.home_score > game.away_score))
         rows.append(row)
@@ -200,6 +204,6 @@ def backtest(games, injuries, hours_before=24, simulations=2000, seed=7):
             "limitations": ["No fitted player effects or calibrated absence probabilities",
                             "Scenario quantiles are not posterior confidence intervals",
                             "Ratings reflect historical availability; effects may double count",
-                            "Independent absences; no injury interactions or rating uncertainty",
+                            "Independent absences; no injury interactions; baseline lacks rating uncertainty",
                             "Binary scoring excludes ties; settlement needs separate handling",
                             "Revised data does not prove historical point-in-time availability"]}

@@ -18,6 +18,7 @@ def main():
         command.add_argument('--out', required=True)
         command.add_argument('--simulations', type=int, default=2000)
         command.add_argument('--seed', type=int, default=7)
+        command.add_argument('--model', choices=['baseline', 'bayesian'], default='bayesian')
         if name == 'backtest':
             command.add_argument('--hours-before', type=float, default=24)
         else:
@@ -35,14 +36,18 @@ def main():
         if any(i.game_id not in known_ids for i in injuries):
             raise ValueError('Injury contains an unknown game ID')
         if args.command == 'backtest':
-            report = backtest(games, injuries, args.hours_before, args.simulations, args.seed)
+            report = backtest(games, injuries, args.hours_before, args.simulations, args.seed, args.model)
         else:
             game = next((g for g in games if g.game_id == args.game_id), None)
             if game is None:
                 raise ValueError('Unknown game ID')
             cutoff = timestamp(args.cutoff)
-            model = fit_before(games, cutoff, game.season)
-            report = forecast(model, game, injuries, cutoff, args.simulations, args.seed)
+            if args.model == 'bayesian':
+                from .bayes import fit, predict
+                report = predict(fit(games, game, cutoff), game, injuries, cutoff, args.simulations, args.seed)
+            else:
+                model = fit_before(games, cutoff, game.season)
+                report = forecast(model, game, injuries, cutoff, args.simulations, args.seed)
         report['inputs'] = [fingerprint(args.games)] + ([fingerprint(args.injuries)] if args.injuries else [])
         report['run_config'] = vars(args)
         destination = Path(args.out)
