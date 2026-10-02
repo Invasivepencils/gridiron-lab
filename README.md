@@ -5,9 +5,7 @@ and pregame win probabilities. The goal is to measure whether injury information
 improves forecasts on unseen games, then compare calibrated forecasts with
 contemporaneous market prices after trading costs.
 
-**Status: working research scaffold.** This version has an online team-strength
-baseline, injury-scenario simulation, CSV validation, chronological backtesting,
-and an optional free-data acquisition adapter. It does not yet have fitted player
+**Status: research prototype with a local dashboard.** This version includes Bayesian score-margin regression, joint team-strength uncertainty, injury-scenario simulation, CSV validation, chronological backtesting, and an optional free-data acquisition adapter. It does not yet have fitted player
 effects, verified real-season injury coverage, or evidence of a trading edge.
 All bundled examples are synthetic and use fictional teams and players.
 
@@ -16,6 +14,10 @@ All bundled examples are synthetic and use fictional teams and players.
 Requires Python 3.11 or newer. From this project directory:
 
 ```powershell
+python -m pip install -e .
+python -m gridiron_lab.server
+# Open http://127.0.0.1:8081
+
 python -m gridiron_lab.cli backtest --games examples/games.csv --injuries examples/injuries.csv --out reports/demo-backtest.json
 python -m gridiron_lab.cli forecast --games examples/games.csv --injuries examples/injuries.csv --game-id DEMO_4 --cutoff 2024-09-28T17:00:00Z --out reports/demo-forecast.json
 python -m unittest discover -s tests -v
@@ -95,18 +97,13 @@ Missing reports are missing coverage, not evidence of a fully healthy lineup.
 
 ## Modeling approach and limits
 
-Team ratings update after usable results, based on clipped prediction errors in
-score margin. New seasons shrink old ratings toward league average. A Gaussian
-margin model turns relative ratings and home-field advantage into probabilities.
-Defaults are transparent but uncalibrated; no parameters were selected on real
-data in this version.
+The default model is conjugate Bayesian linear regression of home-minus-away score margin. Each design-matrix row contains +1 for the home team, -1 for the away team, and a home-field indicator. Proper zero-centered team priors resolve the common-offset ambiguity of team contrasts; the home-field prior mean is 1.5 points.
 
-The injury simulator samples absences and uncertain effects, then integrates
-game-level margin noise analytically. It reports probability changes, simulation
-standard error, and 5th/95th percentiles across injury scenarios. These percentiles
-are not posterior credible intervals, and simulation precision does not measure
-model accuracy. Simultaneous absences are assumed independent; shared injury
-risks, replacement interactions, and team-rating uncertainty are not modeled.
+With normal–inverse-gamma priors, posterior precision is `Lambda = Lambda0 + XᵀX` and the posterior mean solves `Lambda m = Lambda0 m0 + Xᵀy`. NumPy Cholesky factorization and triangular systems preserve joint team covariance without explicitly inverting the matrix. Integrating coefficient and noise uncertainty produces a Student-t predictive distribution. Simulation draws a shared noise variance and correlated team coefficients, then adds sampled injury losses. The dashboard reports a 90% predictive **score-margin** interval, which includes future-game noise.
+
+Only the target season's completed games with results available strictly before the forecast cutoff enter the Bayesian fit. Prior strengths and noise parameters are transparent but uncalibrated; no real-season performance or trading edge is established. Use `--model baseline` to compare the earlier online score-rating model, which shrinks prior-season ratings toward league average.
+
+Absences are independent Bernoulli draws, with supplied uncertain point effects clamped at zero. Probability changes and Monte Carlo standard errors describe these assumed scenarios. Scenario-probability percentiles differ from the predictive margin interval; simulation precision is not model accuracy. Player effects are supplied assumptions, not learned league-wide rankings or causal impact estimates. Correlated absences and replacement interactions remain unmodeled.
 
 The baseline describes historically observed rosters, not a hypothetical healthy
 team. Adding losses for players already absent in recent games can double count
@@ -143,5 +140,4 @@ attributions or demonstrated causal effects.
 ## GitHub
 
 Repository: [Invasivepencils/gridiron-lab](https://github.com/Invasivepencils/gridiron-lab).
-CI, a license selected by the author, live ingestion, and a dashboard can be
-added in subsequent iterations.
+The local dashboard supports validated CSV uploads, matchup selection, pregame cutoffs, probability shifts, predictive intervals, JSON export, and chronological backtesting. GitHub Actions runs the regression suite. Live normalized ingestion, fitted player effects, and a license selected by the author remain future work.

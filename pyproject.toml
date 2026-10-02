@@ -7,7 +7,7 @@ name = "gridiron-lab"
 version = "0.1.0"
 description = "Reproducible NFL forecasting and injury-scenario research"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = ["numpy>=2.0,<3", "scipy>=1.14,<2"]
 
 [project.optional-dependencies]
 data = ["nflreadpy>=0.1,<1"]
@@ -17,3 +17,6 @@ gridiron-lab = "gridiron_lab.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["gridiron_lab*"]
+
+[tool.setuptools.package-data]
+gridiron_lab = ["web/*.html", "web/*.css", "web/*.js"]
