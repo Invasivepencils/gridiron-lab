@@ -38,12 +38,13 @@ function display(value) {
   }));
   $('injury-note').textContent=value.players.length ? 'Effects are supplied assumptions relative to replacement, not fitted causal estimates. Isolated effects do not add up to a joint attribution.' : 'No injury reports were supplied before the cutoff. This does not establish that either roster is healthy.';
 }
-function fail(error) { $('error').hidden=false; $('error').textContent=error.message; }
+function fail(error) { report=null; $('output').hidden=true; $('error').hidden=false; $('error').textContent=error.message || 'Unable to read the data. Check your CSV and try again.'; }
 async function run(){try{display(await request());}catch(e){fail(e);}}
 async function demo(){try{data=await (await fetch('/api/demo')).json(); await options(); $('cutoff').value=data.cutoff; $('mode').textContent='SYNTHETIC DEMONSTRATION'; $('dataset-note').textContent='Fictional teams and assumed player effects. This is a method demonstration, not a current NFL forecast.'; $('games-file').value=''; $('injuries-file').value=''; $('backtest-result').hidden=true;await run();}catch(e){fail(e);}}
-$('experiment').addEventListener('submit',async e=>{e.preventDefault();const button=e.submitter;button.disabled=true;button.textContent='Estimating…';await run();button.disabled=false;button.textContent='Run Bayesian forecast →';});
+$('experiment').addEventListener('submit',async e=>{e.preventDefault();const button=e.submitter || e.currentTarget.querySelector('button[type="submit"]');button.disabled=true;button.textContent='Estimating…';await run();button.disabled=false;button.textContent='Run Bayesian forecast →';});
 $('games-file').addEventListener('change',async e=>{try{if(!e.target.files[0])return;data.games_csv=await e.target.files[0].text();data.game_id=null;data.injuries_csv='';await options();$('cutoff').value=new Date(new Date($('game').selectedOptions[0].dataset.kickoff).getTime()-86400000).toISOString();$('output').hidden=true;$('backtest-result').hidden=true;$('injuries-file').value='';$('mode').textContent='USER-SUPPLIED DATA';$('dataset-note').textContent='Uploaded CSVs have not been independently verified. Set a pregame UTC cutoff and supply timestamped injury assumptions.';}catch(e){fail(e);}});
-$('injuries-file').addEventListener('change',async e=>{if(e.target.files[0])data.injuries_csv=await e.target.files[0].text();});
+$('injuries-file').addEventListener('change',async e=>{if(e.target.files[0]){data.injuries_csv=await e.target.files[0].text();$('output').hidden=true;}});
+$('cutoff').addEventListener('input',()=>{$('output').hidden=true;});
 $('game').addEventListener('change',()=>{$('cutoff').value=new Date(new Date($('game').selectedOptions[0].dataset.kickoff).getTime()-86400000).toISOString();$('output').hidden=true;});
 $('demo').addEventListener('click',demo);
 $('download').addEventListener('click',()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(report,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download='gridiron-forecast.json';a.click();URL.revokeObjectURL(url);});
