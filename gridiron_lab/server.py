@@ -4,6 +4,7 @@ import json
 import tempfile
 from pathlib import Path
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import urlsplit
 from .data import read_games, read_injuries
 from .engine import backtest, timestamp
 from .bayes import fit, predict
@@ -46,6 +47,7 @@ class Handler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self):
+        self.path = urlsplit(self.path).path
         if self.path == '/api/demo':
             data = {'games_csv':(ROOT/'examples/games.csv').read_text(),
                     'injuries_csv':(ROOT/'examples/injuries.csv').read_text(),
@@ -54,7 +56,14 @@ class Handler(BaseHTTPRequestHandler):
             return
         paths = {'/':('index.html','text/html; charset=utf-8'),
                  '/app.css':('app.css','text/css; charset=utf-8'),
-                 '/app.js':('app.js','text/javascript; charset=utf-8')}
+                 '/app.js':('app.js','text/javascript; charset=utf-8'),
+                 '/experiment.html':('experiment.html','text/html; charset=utf-8'),
+                 '/history.css':('history.css','text/css; charset=utf-8'),
+                 '/history.js':('history.js','text/javascript; charset=utf-8')}
+        if self.path in {'/history-index.json','/history-2023.json','/history-2024.json','/history-2025.json'}:
+            file=ROOT/'docs'/self.path.lstrip('/')
+            if not file.exists():self.respond(b'{"error":"Build historical data first"}',404);return
+            self.respond(file.read_bytes());return
         if self.path not in paths:
             self.respond(b'{"error":"Not found"}',404); return
         name,kind = paths[self.path]
