@@ -10,7 +10,7 @@ contemporaneous market prices after trading costs.
 
 **Status: research prototype with a local dashboard.** This version includes Bayesian score-margin regression, joint team-strength uncertainty, injury-scenario simulation, CSV validation, chronological backtesting, and an optional free-data acquisition adapter. It does not yet have fitted player
 effects, verified real-season injury coverage, or evidence of a trading edge.
-All bundled examples are synthetic and use fictional teams and players.
+Forecasting examples are synthetic and use fictional teams and players. The homepage uses attributed historical NFL play records.
 
 ## Run the example
 
@@ -144,3 +144,13 @@ attributions or demonstrated causal effects.
 
 Repository: [Invasivepencils/gridiron-lab](https://github.com/Invasivepencils/gridiron-lab).
 The local dashboard supports validated CSV uploads, matchup selection, pregame cutoffs, probability shifts, predictive intervals, JSON export, and chronological backtesting. GitHub Actions runs the regression suite. Live normalized ingestion, fitted player effects, and a license selected by the author remain future work.
+
+## Historical player analysis
+
+The homepage compares any two NFL teams over a completed regular season (2023–2025) or one week. It shows deduplicated game results, average scoring margins, and leading recorded contributors overall and by unit. Select a player for weekly plays and participation evidence; select a game to explore that week. Team comparison selections are retained in the URL. The synthetic experiment remains at `experiment.html`.
+
+Play impact is accumulated, shared win-probability credit on recorded events, not causal value or a complete player ranking. Season totals can exceed 100. Blocking and off-ball coverage are incompletely measured. A bye or missing credit is explained rather than ranked as a zero.
+
+The bundled JSON snapshots include 816 regular-season games, derived by `gridiron_lab.history` from nflverse records. `docs/history-index.json` retains source URLs, retrieval timestamps, raw hashes, coverage, licensing attribution, and result reconciliation. To rebuild, run `python -m gridiron_lab.history --help`. These historical snapshots are not live 2026 data.
+
+Season snapshots are served as `.json.gz` and decoded by the browser with `DecompressionStream`. After rebuilding raw JSON, run `python scripts/compress_history.py` to prepare the files for publishing. Compression preserves the original JSON exactly.

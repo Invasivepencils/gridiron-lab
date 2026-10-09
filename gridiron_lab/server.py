@@ -60,10 +60,10 @@ class Handler(BaseHTTPRequestHandler):
                  '/experiment.html':('experiment.html','text/html; charset=utf-8'),
                  '/history.css':('history.css','text/css; charset=utf-8'),
                  '/history.js':('history.js','text/javascript; charset=utf-8')}
-        if self.path in {'/history-index.json','/history-2023.json','/history-2024.json','/history-2025.json'}:
+        if self.path in {'/history-index.json','/history-2023.json','/history-2024.json','/history-2025.json','/history-2023.json.gz','/history-2024.json.gz','/history-2025.json.gz'}:
             file=ROOT/'docs'/self.path.lstrip('/')
             if not file.exists():self.respond(b'{"error":"Build historical data first"}',404);return
-            self.respond(file.read_bytes());return
+            self.respond(file.read_bytes(),kind='application/gzip' if file.suffix=='.gz' else 'application/json');return
         if self.path not in paths:
             self.respond(b'{"error":"Not found"}',404); return
         name,kind = paths[self.path]
