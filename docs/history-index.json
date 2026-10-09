@@ -1,0 +1,236 @@
+{
+  "seasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "teams": {
+    "ARI": "Arizona Cardinals",
+    "ATL": "Atlanta Falcons",
+    "BAL": "Baltimore Ravens",
+    "BUF": "Buffalo Bills",
+    "CAR": "Carolina Panthers",
+    "CHI": "Chicago Bears",
+    "CIN": "Cincinnati Bengals",
+    "CLE": "Cleveland Browns",
+    "DAL": "Dallas Cowboys",
+    "DEN": "Denver Broncos",
+    "DET": "Detroit Lions",
+    "GB": "Green Bay Packers",
+    "HOU": "Houston Texans",
+    "IND": "Indianapolis Colts",
+    "JAX": "Jacksonville Jaguars",
+    "KC": "Kansas City Chiefs",
+    "LA": "Los Angeles Rams",
+    "LAC": "Los Angeles Chargers",
+    "LV": "Las Vegas Raiders",
+    "MIA": "Miami Dolphins",
+    "MIN": "Minnesota Vikings",
+    "NE": "New England Patriots",
+    "NO": "New Orleans Saints",
+    "NYG": "New York Giants",
+    "NYJ": "New York Jets",
+    "PHI": "Philadelphia Eagles",
+    "PIT": "Pittsburgh Steelers",
+    "SEA": "Seattle Seahawks",
+    "SF": "San Francisco 49ers",
+    "TB": "Tampa Bay Buccaneers",
+    "TEN": "Tennessee Titans",
+    "WAS": "Washington Commanders"
+  },
+  "coverage": [
+    {
+      "season": 2023,
+      "games": 272,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "plays": 47399,
+      "modeled_plays": 46426,
+      "players": 2109,
+      "unmatched_snap_rows": 13,
+      "unmatched_player_team_weeks": 3,
+      "injury_rows": 5451
+    },
+    {
+      "season": 2024,
+      "games": 272,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "plays": 47274,
+      "modeled_plays": 46324,
+      "players": 2178,
+      "unmatched_snap_rows": 39,
+      "unmatched_player_team_weeks": 1,
+      "injury_rows": 5954
+    },
+    {
+      "season": 2025,
+      "games": 272,
+      "weeks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "plays": 46452,
+      "modeled_plays": 45474,
+      "players": 2176,
+      "unmatched_snap_rows": 52,
+      "unmatched_player_team_weeks": 4,
+      "injury_rows": 5783
+    }
+  ],
+  "sources": [
+    {
+      "name": "play_by_play_2023.csv.gz",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2023.csv.gz",
+      "size": 19169807,
+      "sha256": "4649804ee0f0a40b41e51ec75a1ce921949d7fab5459213488656b92f78560e8",
+      "retrieved_at": "2026-10-02T19:41:13.676912+00:00"
+    },
+    {
+      "name": "play_by_play_2024.csv.gz",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2024.csv.gz",
+      "size": 19362351,
+      "sha256": "23370d5d10f8104d80d46a1fc5e61f4f6f5a3263fe96fe2dd629913cfcb08c06",
+      "retrieved_at": "2026-10-02T19:41:12.762456+00:00"
+    },
+    {
+      "name": "play_by_play_2025.csv.gz",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/pbp/play_by_play_2025.csv.gz",
+      "size": 19105296,
+      "sha256": "2f135887790a013fd004e609e37096bb4816d5cc80b9f19122e1bad478961978",
+      "retrieved_at": "2026-10-02T19:41:11.293252+00:00"
+    },
+    {
+      "name": "players.csv.gz",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/players/players.csv.gz",
+      "size": 2499547,
+      "sha256": "7c24db9e72de82a95c6cc95af35464ab38ab0085ec8c256e16fa20d1969ba8a9",
+      "retrieved_at": "2026-10-02T19:41:10.314265+00:00"
+    },
+    {
+      "name": "snap_counts_2023.csv.gz",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/snap_counts/snap_counts_2023.csv.gz",
+      "size": 500319,
+      "sha256": "11fbfcfaaf3e0eeef4cbf159821a0e48d9824e84fccbab26b8e50c6f67ad8830",
+      "retrieved_at": "2026-10-02T19:41:11.087336+00:00"
+    },
+    {
+      "name": "snap_counts_2024.csv.gz",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/snap_counts/snap_counts_2024.csv.gz",
+      "size": 502822,
+      "sha256": "fe1d819db55d6e333057a8efcec52e8506ef111c7961b0e0411310393bb912bb",
+      "retrieved_at": "2026-10-02T19:41:11.659700+00:00"
+    },
+    {
+      "name": "snap_counts_2025.csv.gz",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/snap_counts/snap_counts_2025.csv.gz",
+      "size": 504063,
+      "sha256": "66e3e0ff4c61856101718c770a6378112ad0788b10587d25cb574a6bfa17d6a8",
+      "retrieved_at": "2026-10-02T19:41:11.849788+00:00"
+    },
+    {
+      "name": "injuries_2023.csv.gz",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/injuries/injuries_2023.csv.gz",
+      "size": 140729,
+      "sha256": "fc8468eeeaff24151ee94d5d718116cee2baceee07b3ee151c4d42a6aec763e2",
+      "retrieved_at": "2026-10-02T19:41:12.281253+00:00"
+    },
+    {
+      "name": "injuries_2024.csv.gz",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/injuries/injuries_2024.csv.gz",
+      "size": 157383,
+      "sha256": "7fe70c7b1ec165e2fcdf57f29034f8ec104875071600e30eafdb1849591e2a45",
+      "retrieved_at": "2026-10-02T19:41:12.491096+00:00"
+    },
+    {
+      "name": "injuries_2025.csv.gz",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/injuries/injuries_2025.csv.gz",
+      "size": 127360,
+      "sha256": "6f1a882aa738b685dac09f15f67bc1f891c9bc258148c98138f8589c9b08300b",
+      "retrieved_at": "2026-10-02T19:41:12.851087+00:00"
+    },
+    {
+      "name": "roster_weekly_2023.csv",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/weekly_rosters/roster_weekly_2023.csv",
+      "sha256": "1433f1f239784dde7fcb35349d211a9b83abfc0156337b72ec4f923abf715bd3",
+      "retrieved_at": "2026-10-02T19:42:32.041529+00:00"
+    },
+    {
+      "name": "roster_weekly_2024.csv",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/weekly_rosters/roster_weekly_2024.csv",
+      "sha256": "074ecaeb9325de943c11f7bbc941425626985090ef8386f90cd837fa5cb5d4b3",
+      "retrieved_at": "2026-10-02T19:42:33.654757+00:00"
+    },
+    {
+      "name": "roster_weekly_2025.csv",
+      "url": "https://github.com/nflverse/nflverse-data/releases/download/weekly_rosters/roster_weekly_2025.csv",
+      "sha256": "c2f7a1ffebe06058400af1989d1cd2900cc5c9659f084623708a06d4e28de35b",
+      "retrieved_at": "2026-10-02T19:42:35.200684+00:00"
+    },
+    {
+      "name": "games.csv",
+      "url": "https://raw.githubusercontent.com/nflverse/nfldata/master/data/games.csv",
+      "sha256": "3023a7e75d5dfd576ee891b74e54d0ad9e3974e5ae439f0bce88f01dfbc18742",
+      "retrieved_at": "2026-10-03T09:23:21.371160+00:00"
+    }
+  ],
+  "data_license": "CC BY 4.0; nflverse play-by-play, identities, rosters, injuries; PFR snap counts via nflverse. Derived attribution and analysis by Gridiron Lab.",
+  "files": {
+    "2023": "e25b666c014c",
+    "2024": "6f21524334d0",
+    "2025": "3a53b6d557a0"
+  },
+  "result_validation": "All 816 regular-season game IDs and final scores reconcile against nflverse/nfldata games.csv."
+}
