@@ -152,3 +152,5 @@ The homepage compares any two NFL teams over a completed regular season (2023–
 Play impact is accumulated, shared win-probability credit on recorded events, not causal value or a complete player ranking. Season totals can exceed 100. Blocking and off-ball coverage are incompletely measured. A bye or missing credit is explained rather than ranked as a zero.
 
 The bundled JSON snapshots include 816 regular-season games, derived by `gridiron_lab.history` from nflverse records. `docs/history-index.json` retains source URLs, retrieval timestamps, raw hashes, coverage, licensing attribution, and result reconciliation. To rebuild, run `python -m gridiron_lab.history --help`. These historical snapshots are not live 2026 data.
+
+Season snapshots are served as `.json.gz` and decoded by the browser with `DecompressionStream`. After rebuilding raw JSON, run `python scripts/compress_history.py` to prepare the files for publishing. Compression preserves the original JSON exactly.
